@@ -7,6 +7,12 @@ const projectNames = [
   "jotform3",
   "widgets",
   "vendors",
+  // "templates",
+  // "v4-editor",
+  // "templates",
+  // "pages",
+  // "mobile",
+  // "landing"
 ]
 
 export {

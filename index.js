@@ -1,26 +1,23 @@
 import { projectNames } from "./src/constants.js"
 import { getProjects } from "./src/utils.js"
-import { execCommand } from "./src/command.js";
+import { commandList } from "./src/command.js";
 import chalk from "chalk";
+import async from "async";
 //coming soon
 // import co from "co";
 
-function sync() {
+async function sync() {
   const projects = getProjects(projectNames)
 
   console.log(chalk.yellow.white.bold(`Syncing -->  ${JSON.stringify(projects, null, 2)} projects\n`))
 
-  projects.forEach(async (project) => {
+  projects.forEach(project => {
     const { name: projectName, path: projectPath } = project
 
-    const pullCommand = `cd ${projectPath} && git pull upstream master`
-    const pushCommand = `cd ${projectPath} && git push origin master`
-    const syncCommand = `cd ${projectPath} && ./sync`
-
-    await execCommand(pullCommand, projectName)
-    await execCommand(pushCommand, projectName)
-    await execCommand(syncCommand, projectName)
-  });
+    commandList.pull(projectPath, projectName)
+    commandList.push(projectPath, projectName)
+    commandList.sync(projectPath, projectName)
+  })
 }
 
 sync()
