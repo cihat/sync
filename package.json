@@ -1,8 +1,9 @@
 {
   "name": "sync",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fetch upstream and sync to rds for all repos on the ~/www/ path.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
@@ -10,5 +11,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "co": "^4.6.0",
+    "randoma": "^2.0.0"
+  }
 }
