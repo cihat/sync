@@ -2,7 +2,6 @@ import { projectNames } from "./src/constants.js"
 import { getProjects } from "./src/utils.js"
 import { commandList } from "./src/command.js";
 import chalk from "chalk";
-import async from "async";
 //coming soon
 // import co from "co";
 

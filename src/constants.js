@@ -1,19 +1,9 @@
-const rootPath = "~/www/"
+import * as dotenv from 'dotenv'
+dotenv.config()
 
-const projectNames = [
-  "frontend",
-  "backend",
-  "api",
-  "jotform3",
-  "widgets",
-  "vendors",
-  // "templates",
-  // "v4-editor",
-  // "templates",
-  // "pages",
-  // "mobile",
-  // "landing"
-]
+const rootPath = process.env.ROOT_PATH || "~/www/"
+
+const projectNames = JSON.parse(process.env.PROJECT_NAMES)
 
 export {
   rootPath,

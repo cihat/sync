@@ -15,6 +15,7 @@
   "dependencies": {
     "chalk": "^5.2.0",
     "co": "^4.6.0",
+    "dotenv": "^16.0.3",
     "randoma": "^2.0.0"
   }
 }
