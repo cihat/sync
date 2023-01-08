@@ -2,19 +2,30 @@
   "name": "sync",
   "version": "1.0.0",
   "description": "Fetch upstream and sync to rds for all repos on the ~/www/ path.",
+  "author": "Cihat S. <cihatsalik1@gmail.com",
+  "homepage": "https://github.com/cihat-salik/sync",
   "main": "index.js",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "sync",
+    "upstream",
+    "rds",
+    "github",
+    "cli",
+    "command",
+    "cli-tool"
+  ],
   "license": "ISC",
   "dependencies": {
     "chalk": "^5.2.0",
-    "co": "^4.6.0",
     "dotenv": "^16.0.3",
     "randoma": "^2.0.0"
   }
