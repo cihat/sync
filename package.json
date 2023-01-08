@@ -1,7 +1,7 @@
 {
   "name": "pull-push-sync",
   "version": "1.0.3",
-  "description": "Fetch upstream and sync to rds for all repos on the ~/www/ path.",
+  "description": "Customizable developer-friendly CLI tool that with pull, push and synchronizes RDS for preferred projects in the entered path.",
   "author": "Cihat Salik <cihatsalik1@gmail.com",
   "repository": {
     "type": "git",
@@ -24,9 +24,10 @@
     "upstream",
     "rds",
     "github",
-    "cli",
     "command",
-    "cli-tool"
+    "cli-tool",
+    "pull-push-sync",
+    "auto-sync"
   ],
   "license": "ISC",
   "dependencies": {
