@@ -2,4 +2,4 @@
 
 ## Fetch upstream, push and sync to RDS for all repos on the specific paths.
 
-![sync2](https://user-images.githubusercontent.com/117152189/211195004-b6fe16e0-815e-488f-99db-f76bedaa7076.gif)
+![sync3](https://user-images.githubusercontent.com/117152189/211199312-92cdb151-2674-4a6d-9f58-8bb0d1063cdf.gif)
