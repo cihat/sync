@@ -4,18 +4,26 @@ import fs from "fs"
 import path from "path"
 import os from "os"
 
-function getProjectsObject(projectNames) {
+function getProjectsObject(projectNames, projectsPath) {
   return projectNames.map(name => ({
     name,
-    path: `${rootPath}${name}/`
+    path: `${projectsPath}/${name}/`
   }))
 }
 
-async function getProjects(isAllProjects) {
-  if (!isAllProjects) return getProjectsObject(projectNames)
+async function getProjects(path) {
+  let osRootPath
+  let projectsPath
 
-  const osRootPath = os.homedir()
-  const projectsPath = path.join(osRootPath, allProjectsDirName)
+  if (!path) {
+    osRootPath = os.homedir()
+    projectsPath = path.join(osRootPath, allProjectsDirName)
+  }
+
+  projectsPath = path
+
+  console.log('projectsPath', projectsPath)
+
 
   const directories = await fs.promises.readdir(projectsPath).then(files => {
     return files.filter(file => {
@@ -27,5 +35,6 @@ async function getProjects(isAllProjects) {
 }
 
 export {
-  getProjects
+  getProjects,
+  getProjectsObject
 }

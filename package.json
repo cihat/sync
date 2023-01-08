@@ -1,6 +1,6 @@
 {
-  "name": "sync",
-  "version": "1.0.0",
+  "name": "pull-push-sync",
+  "version": "1.0.1",
   "description": "Fetch upstream and sync to rds for all repos on the ~/www/ path.",
   "author": "Cihat S. <cihatsalik1@gmail.com",
   "homepage": "https://github.com/cihat-salik/sync",
@@ -27,6 +27,7 @@
   "dependencies": {
     "chalk": "^5.2.0",
     "dotenv": "^16.0.3",
+    "inquirer": "^9.1.4",
     "randoma": "^2.0.0"
   }
 }
