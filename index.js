@@ -8,7 +8,7 @@ import chalk from "chalk";
 
   let projects = await getProjects(isAllProjects)
 
-  console.log(chalk.bgGreen.bgWhite.blackBright.italic(`Syncing -->  ${JSON.stringify(projects, null, 2)} projects\n`))
+  console.log(chalk.bgGreen.bgWhite.white.italic(`Syncing -->  ${JSON.stringify(projects, null, 2)} projects\n`))
 
   projects.forEach(async project => {
     const { name, path } = project
