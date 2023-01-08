@@ -1,12 +1,14 @@
-import { projectNames } from "./src/constants.js"
 import { getProjects } from "./src/utils.js"
 import { commandList } from "./src/command.js";
+import { projectNames } from './src/constants.js'
 import chalk from "chalk";
 
-(() => {
-  const projects = getProjects(projectNames)
+(async () => {
+  const isAllProjects = projectNames.length > 0 ? false : true
 
-  console.log(chalk.yellow.white.bold(`Syncing -->  ${JSON.stringify(projects, null, 2)} projects\n`))
+  let projects = await getProjects(isAllProjects)
+
+  console.log(chalk.bgGreen.bgWhite.blackBright.italic(`Syncing -->  ${JSON.stringify(projects, null, 2)} projects\n`))
 
   projects.forEach(async project => {
     const { name, path } = project
