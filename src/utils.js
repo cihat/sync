@@ -1,4 +1,4 @@
-import { rootPath, projectNames } from './constants.js'
+import { rootPath, projectNames, allProjectsDirName } from './constants.js'
 
 import fs from "fs"
 import path from "path"
@@ -15,7 +15,7 @@ async function getProjects(isAllProjects) {
   if (!isAllProjects) return getProjectsObject(projectNames)
 
   const osRootPath = os.homedir()
-  const projectsPath = path.join(osRootPath, 'www')
+  const projectsPath = path.join(osRootPath, allProjectsDirName)
 
   const directories = await fs.promises.readdir(projectsPath).then(files => {
     return files.filter(file => {
@@ -27,6 +27,5 @@ async function getProjects(isAllProjects) {
 }
 
 export {
-  getProjects,
-  getProjectsObject
+  getProjects
 }
