@@ -1,7 +1,8 @@
+#!/usr/bin/env node
+
 import { getProjects, getProjectsObject } from "./src/utils.js"
 import { commandList } from "./src/command.js";
 import chalk from "chalk";
-import prompt from "prompt-sync";
 import fs from "fs";
 import inquirer from "inquirer";
 import * as dotenv from 'dotenv'

@@ -4,6 +4,7 @@
   "description": "Fetch upstream and sync to rds for all repos on the ~/www/ path.",
   "author": "Cihat S. <cihatsalik1@gmail.com",
   "homepage": "https://github.com/cihat-salik/sync",
+  "bin": "index.js",
   "main": "index.js",
   "type": "module",
   "publishConfig": {
