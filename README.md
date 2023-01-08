@@ -15,7 +15,8 @@ pull-push-sync
 npx pull-push-sync
 ```
 
----
+
+## License
 
 MIT License
 
