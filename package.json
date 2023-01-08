@@ -1,6 +1,6 @@
 {
   "name": "pull-push-sync",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Fetch upstream and sync to rds for all repos on the ~/www/ path.",
   "author": "Cihat Salik <cihatsalik1@gmail.com",
   "repository": {
