@@ -16,7 +16,6 @@ dotenv.config();
 
     log(chalk.bgCyan.cyanBright.italic("Project Name --> ", name))
 
-    // Run commands includes pull, push, sync
     selectedCommand.forEach(async command => {
       log(chalk.bgYellow.yellowBright.italic("Command --> ", command))
       await commandList[command](path, name)
