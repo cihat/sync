@@ -1,6 +1,6 @@
 # sync
 
-#### This is a developer-friendly command line interface (CLI) tool that allows users to customize and pull, push, and synchronize RDS for their preferred projects in the specified file path.
+#### It is a developer-friendly command line interface (CLI) tool that allows users to pull, push, and sync to RDS for their preferred projects in a specified file path.
 
 ![syn4](https://user-images.githubusercontent.com/57585087/211230222-304a33af-ffc1-4f49-ab03-4cb5b19d37bf.gif)
 
