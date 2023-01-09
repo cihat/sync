@@ -2,10 +2,14 @@ import fs from "fs";
 import inquirer from "inquirer";
 import { getProjects, getProjectsObject } from "./utils.js";
 import chalk from "chalk";
+import process from "process";
 
 export default async function question() {
   let projects = []
   let selectedCommand = []
+  let branchName = ""
+  let selectedProjects = []
+  let syncFileName = "sync"
   const log = console.log
 
   const username = await inquirer.prompt([{
@@ -23,7 +27,7 @@ export default async function question() {
     loop: true,
     default: `/Users/${username}/www`,
     validate: function (value) {
-      if (!value || !fs.lstatSync(value).isDirectory()) {
+      if (!value || !fs.lstatSync(value).isDirectory() || !fs.existsSync(value)) {
         return 'You have entered an invalid path. Please try again.'
       }
       return true
@@ -37,16 +41,33 @@ export default async function question() {
     default: true
   }]).then(({ isSurePath }) => isSurePath).then(isSurePath => {
     if (!isSurePath) {
-      log(chalk.bgRed.redBright.bold('EXIT PROGRAM'))
-      return
+      log(chalk.bgGreen.greenBright.bold('Please run the program again and enter the correct path'))
+      log(chalk.bgRed.redBright.bold('Bye Bye! 👋🏼👋🏼👋🏼'))
+
+      process.exit()
     }
 
     return true
   })
 
+  branchName = await inquirer.prompt([{
+    type: 'input',
+    name: 'branchName',
+    message: 'Can you enter the branch name you want to sync? ',
+    loop: true,
+    default: "master",
+  }]).then(({ branchName }) => branchName)
+
   projects = await getProjects(projectsPath)
 
-  projects = await inquirer.prompt([{
+  if (projects.length === 0) {
+    log(chalk.bgRed.redBright.bold('There are no projects in the path you entered'))
+    log(chalk.bgRed.redBright.bold('Bye Bye! '), "👋🏼 👋🏼 👋🏼")
+
+    process.exit()
+  }
+
+  selectedProjects = await inquirer.prompt([{
     type: 'checkbox',
     name: 'projects',
     message: 'Select the projects you want to sync',
@@ -57,13 +78,8 @@ export default async function question() {
         checked: true
       }
     }),
-    checked: true
+    checked: true,
   }]).then((answers) => getProjectsObject(answers.projects, projectsPath))
-
-  if (projects.length === 0) {
-    log(chalk.bgRed.redBright.bold('EXIT PROGRAM'))
-    return
-  }
 
   selectedCommand = await inquirer.prompt([{
     type: 'checkbox',
@@ -71,27 +87,39 @@ export default async function question() {
     message: 'Select the commands you want to run',
     choices: [
       {
-        name: 'pull: git pull upstream master',
+        name: `pull: git pull upstream ${branchName}`,
         value: 'pull',
         checked: true
       },
       {
-        name: 'push: git push origin master',
+        name: `push: git push origin ${branchName}`,
         value: 'push',
         checked: true
       },
       {
-        name: 'sync: ./sync',
+        name: `sync`,
         value: 'sync',
         checked: true
       }
     ]
-  }]).then((answers) => answers.commands)
+  }]).then(({ commands }) => commands)
+
+  if (selectedCommand.includes('sync')) {
+    syncFileName = await inquirer.prompt([{
+      type: 'input',
+      name: 'syncFileName',
+      message: 'Can you enter the sync file name you want to sync? ',
+      loop: true,
+      default: "sync",
+    }]).then(({ syncFileName }) => syncFileName)
+  }
 
   log(chalk.bgGreen.bgWhite.white.italic(`Syncing these projects -- > ${JSON.stringify(projects, null, 2)} projects\n`))
 
   return {
-    projects,
-    selectedCommand
+    selectedProjects,
+    selectedCommand,
+    branchName,
+    syncFileName
   }
 }

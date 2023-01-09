@@ -6,16 +6,16 @@ import questions from "./src/question.js";
 
 (async () => {
   const log = console.log
-  const { projects, selectedCommand } = await questions()
+  const { selectedProjects, selectedCommand, branchName, syncFileName } = await questions()
 
-  projects.forEach(async project => {
+  selectedProjects.forEach(async project => {
     const { name, path } = project
 
     log(chalk.bgCyan.cyanBright.italic("Project Name --> ", name))
 
     selectedCommand.forEach(async command => {
       log(chalk.bgYellow.yellowBright.italic("Command --> ", command))
-      await commandList[command](path, name)
+      await commandList[command](path, name, branchName, syncFileName)
     })
   })
 })()

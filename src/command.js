@@ -21,18 +21,18 @@ function execCommand(command, projectName) {
 }
 
 export const commandList = {
-  pull: (projectPath, projectName) => {
-    const pullCommand = `cd ${projectPath} && git pull upstream master`
+  pull: (projectPath, projectName, branchName, syncFileName) => {
+    const pullCommand = `cd ${projectPath} && git pull upstream ${branchName}`
     // const testCommand = "echo 'pull: 1'"
     execCommand(pullCommand, projectName)
   },
-  push: (projectPath, projectName) => {
-    const pushCommand = `cd ${projectPath} && git push origin master`
+  push: (projectPath, projectName, branchName, syncFileName) => {
+    const pushCommand = `cd ${projectPath} && git push origin ${branchName}`
     // const testCommand = "echo 'push: 2'"
     execCommand(pushCommand, projectName)
   },
-  sync: (projectPath, projectName) => {
-    const syncCommand = `cd ${projectPath} && ./sync`
+  sync: (projectPath, projectName, branchName, syncFileName) => {
+    const syncCommand = `cd ${projectPath} && ./${syncFileName}`
     // const testCommand = "echo 'sync: 3'"
     execCommand(syncCommand, projectName)
   }

@@ -24,6 +24,8 @@ async function getProjects(path) {
     })
   })
 
+  // if (directories.length == 0) throw new Error("No projects found in the path provided.")
+
   return getProjectsObject(directories)
 }
 
