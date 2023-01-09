@@ -29,10 +29,9 @@
     "pull-push-sync",
     "auto-sync"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^5.2.0",
-    "dotenv": "^16.0.3",
     "inquirer": "^9.1.4",
     "randoma": "^2.0.0"
   }

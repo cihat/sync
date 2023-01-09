@@ -41,11 +41,10 @@ export default async function question() {
       return
     }
 
-    process.env.ROOT_PATH = projectsPath
     return true
   })
 
-  projects = await getProjects(process.env.ROOT_PATH)
+  projects = await getProjects(projectsPath)
 
   projects = await inquirer.prompt([{
     type: 'checkbox',
