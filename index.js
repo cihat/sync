@@ -9,15 +9,17 @@ dotenv.config();
 
 (async () => {
   const log = console.log
-  const projects = await questions()
+  const { projects, selectedCommand } = await questions()
 
   projects.forEach(async project => {
     const { name, path } = project
 
-    log(chalk.bgCyan.cyanBright.italic("Project Name --> ", name, " \t\n"))
+    log(chalk.bgCyan.cyanBright.italic("Project Name --> ", name))
 
-    await commandList["pull"](path, name)
-    await commandList["push"](path, name)
-    await commandList["sync"](path, name)
+    // Run commands includes pull, push, sync
+    selectedCommand.forEach(async command => {
+      log(chalk.bgYellow.yellowBright.italic("Command --> ", command))
+      await commandList[command](path, name)
+    })
   })
 })()

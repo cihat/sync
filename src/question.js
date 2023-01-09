@@ -5,6 +5,7 @@ import chalk from "chalk";
 
 export default async function question() {
   let projects = []
+  let selectedCommand = []
   const log = console.log
 
   const username = await inquirer.prompt([{
@@ -65,7 +66,33 @@ export default async function question() {
     return
   }
 
+  selectedCommand = await inquirer.prompt([{
+    type: 'checkbox',
+    name: 'commands',
+    message: 'Select the commands you want to run',
+    choices: [
+      {
+        name: 'pull: git pull upstream master',
+        value: 'pull',
+        checked: true
+      },
+      {
+        name: 'push: git push origin master',
+        value: 'push',
+        checked: true
+      },
+      {
+        name: 'sync: ./sync',
+        value: 'sync',
+        checked: true
+      }
+    ]
+  }]).then((answers) => answers.commands)
+
   log(chalk.bgGreen.bgWhite.white.italic(`Syncing these projects -- > ${JSON.stringify(projects, null, 2)} projects\n`))
 
-  return projects
+  return {
+    projects,
+    selectedCommand
+  }
 }
