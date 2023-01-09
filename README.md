@@ -19,6 +19,8 @@ npx pull-push-sync
 
 ---
 
+If you want to close the program, you can close it with `Control + Z`.
+
 ## License
 
 MIT License
