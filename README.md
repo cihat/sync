@@ -2,7 +2,7 @@
 
 #### Customizable developer-friendly CLI tool that with pull, push and synchronizes RDS for preferred projects in the entered path.
 
-![sync8](https://user-images.githubusercontent.com/117152189/211211541-06dc16a0-4744-4481-a7cb-c6ddcf9e817d.gif)
+![syn4](https://user-images.githubusercontent.com/57585087/211230222-304a33af-ffc1-4f49-ab03-4cb5b19d37bf.gif)
 
 #### Usage
 
