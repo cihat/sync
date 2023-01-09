@@ -1,6 +1,6 @@
 {
   "name": "pull-push-sync",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Customizable developer-friendly CLI tool that with pull, push and synchronizes RDS for preferred projects in the entered path.",
   "author": "Cihat Salik <cihatsalik1@gmail.com",
   "repository": {
