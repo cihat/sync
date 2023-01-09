@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import Randoma from 'randoma';
 const random = new Randoma({ seed: 10 })
 
-async function execCommand(command, projectName) {
+function execCommand(command, projectName) {
   const log = console.log;
 
   log(chalk.yellow.bold(`Running command: ${command} - ${projectName}`))
