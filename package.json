@@ -33,6 +33,7 @@
   "dependencies": {
     "chalk": "^5.2.0",
     "inquirer": "^9.1.4",
+    "inquirer-prompt-suggest": "^0.1.0",
     "randoma": "^2.0.0"
   }
 }

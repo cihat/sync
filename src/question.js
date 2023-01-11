@@ -5,6 +5,9 @@ import chalk from "chalk";
 import { getProjects, getProjectsObject } from "./utils.js";
 
 import inquirer from "inquirer";
+import inquirerPromptSuggest from "inquirer-prompt-suggest"
+
+inquirer.registerPrompt('suggest', inquirerPromptSuggest)
 
 export default async function question() {
   let projects = []
@@ -23,9 +26,12 @@ export default async function question() {
   }]).then(({ username }) => username)
 
   const projectsPath = await inquirer.prompt([{
-    type: 'input',
-    name: 'path',
+    type: 'suggest',
     message: 'Can you enter the path where the projects are located? ',
+    name: 'path',
+    suggestions: [
+      `/Users/${username || 'username'}/www`,
+    ],
     loop: true,
     default: `/Users/${username}/www`,
     validate: function (value) {
@@ -81,7 +87,7 @@ export default async function question() {
       }
     }),
     checked: true,
-  }]).then((answers) => getProjectsObject(answers.projects, projectsPath))
+  }]).then(({ projects }) => getProjectsObject(projects, projectsPath))
 
   selectedCommand = await inquirer.prompt([{
     type: 'checkbox',
@@ -115,8 +121,6 @@ export default async function question() {
       default: "sync",
     }]).then(({ syncFileName }) => syncFileName)
   }
-
-  log(chalk.bgGreen.bgWhite.white.italic(`Syncing these projects -- > ${JSON.stringify(projects, null, 2)} projects\n`))
 
   return {
     selectedProjects,
