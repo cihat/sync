@@ -1,8 +1,10 @@
 import fs from "fs";
-import inquirer from "inquirer";
-import { getProjects, getProjectsObject } from "./utils.js";
-import chalk from "chalk";
 import process from "process";
+
+import chalk from "chalk";
+import { getProjects, getProjectsObject } from "./utils.js";
+
+import inquirer from "inquirer";
 
 export default async function question() {
   let projects = []
@@ -31,7 +33,7 @@ export default async function question() {
         return 'You have entered an invalid path. Please try again.'
       }
       return true
-    },
+    }
   }]).then(({ path }) => path)
 
   await inquirer.prompt([{

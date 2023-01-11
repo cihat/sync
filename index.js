@@ -8,6 +8,9 @@ import questions from "./src/question.js";
   const log = console.log
   const { selectedProjects, selectedCommand, branchName, syncFileName } = await questions()
 
+  log(chalk.bgGreen.bgWhite.white.italic(`Syncing these projects -- > ${JSON.stringify(selectedProjects, null, 2)} projects\n`))
+
+
   selectedProjects.forEach(async project => {
     const { name, path } = project
 
