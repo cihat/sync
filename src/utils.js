@@ -1,5 +1,4 @@
 import fs from "fs"
-import os from "os"
 
 function getProjectsObject(projectNames, projectsPath) {
   return projectNames.map(name => ({
@@ -9,22 +8,13 @@ function getProjectsObject(projectNames, projectsPath) {
 }
 
 async function getProjects(path) {
-  let osRootPath
-  let projectsPath
+  if (!path) return new Error("No path provided.")
 
-  if (!path) {
-    osRootPath = os.homedir()
-    path = path.join(osRootPath, "www")
-  }
-  projectsPath = path
-
-  const directories = await fs.promises.readdir(projectsPath).then(files => {
+  const directories = await fs.promises.readdir(path).then(files => {
     return files.filter(file => {
-      return fs.statSync(`${projectsPath}/${file}`).isDirectory()
+      return fs.statSync(`${path}/${file}`).isDirectory()
     })
   })
-
-  // if (directories.length == 0) throw new Error("No projects found in the path provided.")
 
   return getProjectsObject(directories)
 }
