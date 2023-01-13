@@ -1,4 +1,5 @@
 import fs from "fs"
+import { COMMANDS } from "./constants.js"
 
 function getProjectsObject(projectNames, projectsPath) {
   return projectNames.map(name => ({
@@ -19,7 +20,30 @@ async function getProjects(path) {
   return getProjectsObject(directories)
 }
 
+const checkExistGitFile = (path) => fs.existsSync(`${path}/.git`)
+
+const checkExistSyncFile = (path, syncFileName) => {
+  try {
+    return fs.statSync(`${path}${syncFileName}`).isFile();
+  }
+  catch (err) {
+    return false;
+  }
+}
+
+function checkExistFile(fileType, path, syncFileName) {
+  switch (fileType) {
+    case COMMANDS.GIT.TYPE:
+      return checkExistGitFile(path)
+    case COMMANDS.SYNC.TYPE:
+      return checkExistSyncFile(path, syncFileName)
+    default:
+      return true
+  }
+}
+
 export {
   getProjects,
-  getProjectsObject
+  getProjectsObject,
+  checkExistFile
 }

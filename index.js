@@ -1,8 +1,13 @@
 #!/usr/bin/env node
 
-import { commandList } from "./src/command.js";
+import { commandList, handleCommands } from "./src/command.js";
 import chalk from "chalk";
-import questions from "./src/question.js";
+import questionsProduction from "./src/question.js";
+import questionDevelopment from "./src/questionDevelopment.js";
+
+const questions = process.env.NODE_ENV === 'development' ? questionDevelopment : questionsProduction
+
+console.log('NODE_ENV', process.env.NODE_ENV);
 
 (async () => {
   const log = console.log
@@ -16,8 +21,8 @@ import questions from "./src/question.js";
     log(chalk.bgCyan.cyanBright.italic("Project Name --> ", name))
 
     selectedCommand.forEach(async command => {
-      log(chalk.bgYellow.yellowBright.italic("Command --> ", command))
-      await commandList[command](path, name, branchName, syncFileName)
+      log(chalk.bgYellow.yellowBright.italic("Command --> ", command.name))
+      await handleCommands(command, path, name, branchName, syncFileName)
     })
   })
 })()

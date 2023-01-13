@@ -3,6 +3,7 @@ import process from "process";
 
 import chalk from "chalk";
 import { getProjects, getProjectsObject } from "./utils.js";
+import { COMMANDS } from './constants.js'
 
 import inquirer from "inquirer";
 import inquirerPromptSuggest from "inquirer-prompt-suggest"
@@ -96,23 +97,34 @@ export default async function question() {
     choices: [
       {
         name: `pull: git pull upstream ${branchName}`,
-        value: 'pull',
+        value: {
+          name: COMMANDS.GIT.PULL,
+          type: COMMANDS.GIT.TYPE,
+        },
+        type: COMMANDS.GIT.TYPE,
         checked: true
       },
       {
         name: `push: git push origin ${branchName}`,
-        value: 'push',
+        value: {
+          name: COMMANDS.GIT.PUSH,
+          type: COMMANDS.GIT.TYPE,
+        },
+        type: COMMANDS.GIT.TYPE,
         checked: true
       },
       {
         name: `sync`,
-        value: 'sync',
+        value: {
+          name: COMMANDS.SYNC.SYNC,
+          type: COMMANDS.SYNC.TYPE,
+        },
         checked: true
       }
     ]
   }]).then(({ commands }) => commands)
 
-  if (selectedCommand.includes('sync')) {
+  if (selectedCommand.some(command => command.type == COMMANDS.SYNC.TYPE)) {
     syncFileName = await inquirer.prompt([{
       type: 'input',
       name: 'syncFileName',
