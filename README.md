@@ -1,20 +1,24 @@
 # sync
-                                          
-                                        
+
+```bash
+
+
   /$$$$$$$ /$$   /$$ /$$$$$$$   /$$$$$$$
  /$$_____/| $$  | $$| $$__  $$ /$$_____/
-|  $$$$$$ | $$  | $$| $$  \ $$| $$      
- \____  $$| $$  | $$| $$  | $$| $$      
+|  $$$$$$ | $$  | $$| $$  \ $$| $$
+ \____  $$| $$  | $$| $$  | $$| $$
  /$$$$$$$/|  $$$$$$$| $$  | $$|  $$$$$$$
 |_______/  \____  $$|__/  |__/ \_______/
-           /$$  | $$                    
-          |  $$$$$$/                    
-           \______/                     
+           /$$  | $$
+          |  $$$$$$/
+           \______/
 
-           
+```
+
 #### It is a developer-friendly command line interface (CLI) tool that allows users to pull, push, and sync to RDS for their preferred projects in a specified file path.
 
-![syn4](https://user-images.githubusercontent.com/57585087/211230222-304a33af-ffc1-4f49-ab03-4cb5b19d37bf.gif)
+![sync-1](https://user-images.githubusercontent.com/57585087/212448892-eeda65d7-362e-4541-8401-e1a060be19f4.gif)
+
 
 #### Usage
 
