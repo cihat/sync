@@ -1,3 +1,5 @@
+import { getAnswers } from "./utils.js"
+
 const COMMANDS = {
   GIT: {
     TYPE: 'git',
@@ -17,6 +19,12 @@ const FILE_TYPES = {
 }
 
 const questionsText = {
+  USE_PREVIOUS_ANSWERS: {
+    type: 'confirm',
+    name: 'usePreviousAnswers',
+    message: `${JSON.stringify(getAnswers(), null, 2)}\nDo you want to use the previous settings?`,
+    default: true,
+  },
   USER_NAME: {
     type: 'input',
     name: 'username',

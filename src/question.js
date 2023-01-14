@@ -2,15 +2,38 @@ import fs from "fs";
 import process from "process";
 
 import chalk from "chalk";
-import { getProjects, getProjectsObject } from "./utils.js";
+import { getProjects, getProjectsObject, checkAnswersFileExist, getAnswers, saveAnswers } from "./utils.js";
 import { COMMANDS, questionsText } from './constants.js'
 
 import inquirer from "inquirer";
+
+async function usePreviousAnswers(USE_PREVIOUS_ANSWERS) {
+  return await inquirer.prompt([
+    {
+      type: USE_PREVIOUS_ANSWERS.type,
+      name: USE_PREVIOUS_ANSWERS.name,
+      message: USE_PREVIOUS_ANSWERS.message,
+      default: USE_PREVIOUS_ANSWERS.default,
+      when: ({ usePreviousAnswers }) => {
+        if (!checkAnswersFileExist()) return false
+
+        if (usePreviousAnswers) {
+          log(chalk.bgGreen.bgWhite.white.italic(`Using the previous answers\n`))
+
+          return false
+        }
+
+        return true
+      },
+    },
+  ]).then(({ usePreviousAnswers }) => usePreviousAnswers)
+}
 
 export default async function question() {
   const log = console.log
 
   const {
+    USE_PREVIOUS_ANSWERS,
     USER_NAME,
     PROJECTS_PATH,
     IS_SURE_PATH,
@@ -19,6 +42,14 @@ export default async function question() {
     SELECTED_COMMANDS,
     SYNC_FILE_NAME
   } = questionsText
+
+  const isUsePreviousAnswers = await usePreviousAnswers(USE_PREVIOUS_ANSWERS)
+
+  if (isUsePreviousAnswers) {
+    const answers = getAnswers()
+
+    return answers
+  }
 
   return await inquirer.prompt([
     {
@@ -127,11 +158,14 @@ export default async function question() {
   ]).then(({ projects, commands, branchName, syncFileName, path }) => {
     const _projects = getProjectsObject(projects, path)
 
-    return {
+    const data = {
       projects: _projects,
       commands,
       branchName,
       syncFileName
     }
+    saveAnswers(data)
+
+    return data
   })
 }
