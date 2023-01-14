@@ -76,22 +76,22 @@ const questionsText = {
   },
 }
 
-const coolTerminalText = `
-                                                
-                                              
-        /$$$$$$$ /$$   /$$ /$$$$$$$   /$$$$$$$
-      /$$_____/| $$  | $$| $$__  $$ /$$_____/
-      |  $$$$$$ | $$  | $$| $$  \ $$| $$      
-      \____  $$| $$  | $$| $$  | $$| $$      
-      /$$$$$$$/|  $$$$$$$| $$  | $$|  $$$$$$$
-      |_______/  \____  $$|__/  |__/ \_______/
-                /$$  | $$                    
-                |  $$$$$$/                    
-                \______/                     
-                                                
-  `
+const coolTerminalText = `  
+                                            
+                                            
+      /$$$$$$$ /$$   /$$ /$$$$$$$   /$$$$$$$
+     /$$_____/| $$  | $$| $$__  $$ /$$_____/
+    |  $$$$$$ | $$  | $$| $$  \ $$| $$      
+     \____  $$| $$  | $$| $$  | $$| $$      
+     /$$$$$$$/|  $$$$$$$| $$  | $$|  $$$$$$$
+    |_______/  \____  $$|__/  |__/ \_______/
+               /$$  | $$                    
+              |  $$$$$$/                    
+               \______/                     
+`
 
 const tips = `
+\n\n
     TIPS:
       - You can use the arrow keys to navigate.
       - You can use the space bar to select.
@@ -117,6 +117,7 @@ const tips = `
       - ${questionsText.SELECTED_PROJECTS.message} [project1, project2, project3, ...]
       - ${questionsText.SELECTED_COMMANDS.message} [pull, push, sync]
       - ${questionsText.SYNC_FILE_NAME.message} (sync)
+      \n\n
 `
 
 export {
