@@ -3,141 +3,135 @@ import process from "process";
 
 import chalk from "chalk";
 import { getProjects, getProjectsObject } from "./utils.js";
-import { COMMANDS } from './constants.js'
+import { COMMANDS, questionsText } from './constants.js'
 
 import inquirer from "inquirer";
-import inquirerPromptSuggest from "inquirer-prompt-suggest"
-
-inquirer.registerPrompt('suggest', inquirerPromptSuggest)
 
 export default async function question() {
-  let projects = []
-  let selectedCommand = []
-  let branchName = ""
-  let selectedProjects = []
-  let syncFileName = "sync"
   const log = console.log
 
-  const username = await inquirer.prompt([{
-    type: 'input',
-    name: 'username',
-    message: 'Can you enter your computer username? ',
-    loop: true,
-    default: "username",
-  }]).then(({ username }) => username)
+  const {
+    USER_NAME,
+    PROJECTS_PATH,
+    IS_SURE_PATH,
+    BRANCH_NAME,
+    SELECTED_PROJECTS,
+    SELECTED_COMMANDS,
+    SYNC_FILE_NAME
+  } = questionsText
 
-  const projectsPath = await inquirer.prompt([{
-    type: 'suggest',
-    message: 'Can you enter the path where the projects are located? ',
-    name: 'path',
-    suggestions: [
-      `/Users/${username || 'username'}/www`,
-    ],
-    loop: true,
-    default: `/Users/${username}/www`,
-    validate: function (value) {
-      if (!value || !fs.lstatSync(value).isDirectory() || !fs.existsSync(value)) {
-        return 'You have entered an invalid path. Please try again.'
+  return await inquirer.prompt([
+    {
+      type: USER_NAME.type,
+      name: USER_NAME.name,
+      message: USER_NAME.message,
+      loop: USER_NAME.loop,
+      default: USER_NAME.default,
+    },
+    {
+      type: PROJECTS_PATH.type,
+      name: PROJECTS_PATH.name,
+      message: PROJECTS_PATH.message,
+      loop: PROJECTS_PATH.loop,
+      default: ({ username }) => `/Users/${username}/www`,
+      validate: function (value) {
+        if (!value || !fs.lstatSync(value).isDirectory() || !fs.existsSync(value)) {
+          return 'You have entered an invalid path. Please try again.'
+        }
+        return true
       }
-      return true
+    },
+    {
+      type: IS_SURE_PATH.type,
+      name: IS_SURE_PATH.name,
+      default: IS_SURE_PATH.default,
+      loop: IS_SURE_PATH.loop,
+      message: ({ path }) => `Your path is: "${path}", are you sure?`,
+    },
+    {
+      type: BRANCH_NAME.type,
+      name: BRANCH_NAME.name,
+      message: BRANCH_NAME.message,
+      loop: BRANCH_NAME.loop,
+      default: BRANCH_NAME.default,
+    },
+    {
+      type: SELECTED_PROJECTS.type,
+      name: SELECTED_PROJECTS.name,
+      message: SELECTED_PROJECTS.message,
+      checked: SELECTED_PROJECTS.checked,
+      choices: async ({ path }) => {
+        const projects = await getProjects(path)
+
+        return projects.map((project) => {
+          return {
+            name: project.name,
+            value: project.name,
+            checked: true,
+          }
+        })
+      },
+      validate: (projects) => {
+        if (projects.length === 0) {
+          log(chalk.bgRed.redBright.bold('\nThere are no projects in the path you entered'))
+          log(chalk.bgRed.redBright.bold('Bye Bye! '), "👋🏼 👋🏼 👋🏼")
+
+          process.exit()
+        }
+        return true
+      }
+    },
+    {
+      type: SELECTED_COMMANDS.type,
+      name: SELECTED_COMMANDS.name,
+      message: SELECTED_COMMANDS.message,
+      choices: ({ branchName }) => {
+        return [
+          {
+            name: `pull: git pull upstream ${branchName}`,
+            value: {
+              name: COMMANDS.GIT.PULL,
+              type: COMMANDS.GIT.TYPE,
+            },
+            type: COMMANDS.GIT.TYPE,
+            checked: true
+          },
+          {
+            name: `push: git push origin ${branchName}`,
+            value: {
+              name: COMMANDS.GIT.PUSH,
+              type: COMMANDS.GIT.TYPE,
+            },
+            type: COMMANDS.GIT.TYPE,
+            checked: true
+          },
+          {
+            name: `sync`,
+            value: {
+              name: COMMANDS.SYNC.SYNC,
+              type: COMMANDS.SYNC.TYPE,
+            },
+            checked: true
+          }
+        ]
+      }
+    },
+    {
+      type: SYNC_FILE_NAME.type,
+      name: SYNC_FILE_NAME.name,
+      message: SYNC_FILE_NAME.message,
+      loop: SYNC_FILE_NAME.loop,
+      default: SYNC_FILE_NAME.default,
+      when: ({ commands }) => commands.some(command => command.type == COMMANDS.SYNC.TYPE)
     }
-  }]).then(({ path }) => path)
+  ]).then(({ projects, commands, branchName, syncFileName, path }) => {
+    const _projects = getProjectsObject(projects, path)
 
-  await inquirer.prompt([{
-    type: 'confirm',
-    name: 'isSurePath',
-    message: `Your path is: "${projectsPath}", are you sure?`,
-    default: true
-  }]).then(({ isSurePath }) => isSurePath).then(isSurePath => {
-    if (!isSurePath) {
-      log(chalk.bgGreen.greenBright.bold('Please run the program again and enter the correct path'))
-      log(chalk.bgRed.redBright.bold('Bye Bye! 👋🏼👋🏼👋🏼'))
-
-      process.exit()
+    return {
+      projects: _projects,
+      commands,
+      branchName,
+      syncFileName
     }
-
-    return true
   })
-
-  branchName = await inquirer.prompt([{
-    type: 'input',
-    name: 'branchName',
-    message: 'Can you enter the branch name you want to sync? ',
-    loop: true,
-    default: "master",
-  }]).then(({ branchName }) => branchName)
-
-  projects = await getProjects(projectsPath)
-
-  if (projects.length === 0) {
-    log(chalk.bgRed.redBright.bold('There are no projects in the path you entered'))
-    log(chalk.bgRed.redBright.bold('Bye Bye! '), "👋🏼 👋🏼 👋🏼")
-
-    process.exit()
-  }
-
-  selectedProjects = await inquirer.prompt([{
-    type: 'checkbox',
-    name: 'projects',
-    message: 'Select the projects you want to sync',
-    choices: projects.map(project => {
-      return {
-        name: project.name,
-        value: project.name,
-        checked: true
-      }
-    }),
-    checked: true,
-  }]).then(({ projects }) => getProjectsObject(projects, projectsPath))
-
-  selectedCommand = await inquirer.prompt([{
-    type: 'checkbox',
-    name: 'commands',
-    message: 'Select the commands you want to run',
-    choices: [
-      {
-        name: `pull: git pull upstream ${branchName}`,
-        value: {
-          name: COMMANDS.GIT.PULL,
-          type: COMMANDS.GIT.TYPE,
-        },
-        type: COMMANDS.GIT.TYPE,
-        checked: true
-      },
-      {
-        name: `push: git push origin ${branchName}`,
-        value: {
-          name: COMMANDS.GIT.PUSH,
-          type: COMMANDS.GIT.TYPE,
-        },
-        type: COMMANDS.GIT.TYPE,
-        checked: true
-      },
-      {
-        name: `sync`,
-        value: {
-          name: COMMANDS.SYNC.SYNC,
-          type: COMMANDS.SYNC.TYPE,
-        },
-        checked: true
-      }
-    ]
-  }]).then(({ commands }) => commands)
-
-  if (selectedCommand.some(command => command.type == COMMANDS.SYNC.TYPE)) {
-    syncFileName = await inquirer.prompt([{
-      type: 'input',
-      name: 'syncFileName',
-      message: 'Can you enter the sync file name you want to sync? ',
-      loop: true,
-      default: "sync",
-    }]).then(({ syncFileName }) => syncFileName)
-  }
-
-  return {
-    selectedProjects,
-    selectedCommand,
-    branchName,
-    syncFileName
-  }
 }

@@ -17,7 +17,7 @@ async function getProjects(path) {
     })
   })
 
-  return getProjectsObject(directories)
+  return getProjectsObject(directories, path)
 }
 
 const checkExistGitFile = (path) => fs.existsSync(`${path}/.git`)
