@@ -14,7 +14,7 @@
 
 #### It is a developer-friendly command line interface (CLI) tool that allows users to pull, push, and sync to RDS for their preferred projects in a specified file path.
 
-![sync-2](https://user-images.githubusercontent.com/57585087/212449082-f69e5904-ad70-41c2-b641-877dc972d7b5.gif)
+![sync-3](https://user-images.githubusercontent.com/57585087/212478241-055f35a8-9070-4c8d-8d5e-dd83e48baf8e.gif)
 
 #### Usage
 
