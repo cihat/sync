@@ -11,16 +11,16 @@ console.log('NODE_ENV', process.env.NODE_ENV);
 
 (async () => {
   const log = console.log
-  const { selectedProjects, selectedCommand, branchName, syncFileName } = await questions()
+  const { projects, commands, branchName, syncFileName } = await questions()
 
-  log(chalk.bgGreen.bgWhite.white.italic(`Syncing these projects -- > ${JSON.stringify(selectedProjects, null, 2)} projects\n`))
+  log(chalk.bgGreen.bgWhite.white.italic(`Syncing these projects -- > ${JSON.stringify(projects, null, 2)} projects\n`))
 
-  selectedProjects.forEach(async project => {
+  projects.forEach(async project => {
     const { name, path } = project
 
     log(chalk.bgCyan.cyanBright.italic("Project Name --> ", name))
 
-    selectedCommand.forEach(async command => {
+    commands.forEach(async command => {
       log(chalk.bgYellow.yellowBright.italic("Command --> ", command.name))
       await handleCommands(command, path, name, branchName, syncFileName)
     })
