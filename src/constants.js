@@ -29,26 +29,29 @@ const questionsText = {
     type: 'input',
     name: 'username',
     message: 'Can you enter your computer username? ',
-    loop: true,
     default: 'username',
   },
   PROJECTS_PATH: {
     type: 'suggest',
     name: 'path',
     message: 'Can you enter the path of your projects? ',
-    loop: true,
   },
   IS_SURE_PATH: {
     type: 'confirm',
     name: 'isSurePath',
     default: true,
-    loop: true,
+  },
+  SHORT_REPO_NAME: {
+    type: 'input',
+    name: 'shortRepoName',
+    message: 'Can you enter the shorthand repository name you want to pull [example: origin, upstream]? ',
+    default: 'upstream',
+
   },
   BRANCH_NAME: {
     type: 'input',
     name: 'branchName',
     message: 'Can you enter the branch name you want to sync? ',
-    loop: true,
     default: 'master',
   },
   SELECTED_PROJECTS: {
@@ -56,37 +59,70 @@ const questionsText = {
     name: 'projects',
     message: 'Select the projects you want to sync',
     checked: true,
+    loop: true,
   },
   SELECTED_COMMANDS: {
     type: 'checkbox',
     name: 'commands',
     message: 'Select the commands you want to run',
+    checked: true,
+    loop: true,
   },
   SYNC_FILE_NAME: {
     type: 'input',
     name: 'syncFileName',
     message: 'Can you enter the sync file name you want to sync? ',
-    loop: true,
     default: "sync",
   },
 }
 
-const terminalView = `
-                                          
-                                        
-  /$$$$$$$ /$$   /$$ /$$$$$$$   /$$$$$$$
- /$$_____/| $$  | $$| $$__  $$ /$$_____/
-|  $$$$$$ | $$  | $$| $$  \ $$| $$      
- \____  $$| $$  | $$| $$  | $$| $$      
- /$$$$$$$/|  $$$$$$$| $$  | $$|  $$$$$$$
-|_______/  \____  $$|__/  |__/ \_______/
-           /$$  | $$                    
-          |  $$$$$$/                    
-           \______/                     
+const coolTerminalText = `
+                                                
+                                              
+        /$$$$$$$ /$$   /$$ /$$$$$$$   /$$$$$$$
+      /$$_____/| $$  | $$| $$__  $$ /$$_____/
+      |  $$$$$$ | $$  | $$| $$  \ $$| $$      
+      \____  $$| $$  | $$| $$  | $$| $$      
+      /$$$$$$$/|  $$$$$$$| $$  | $$|  $$$$$$$
+      |_______/  \____  $$|__/  |__/ \_______/
+                /$$  | $$                    
+                |  $$$$$$/                    
+                \______/                     
+                                                
   `
+
+const tips = `
+    TIPS:
+      - You can use the arrow keys to navigate.
+      - You can use the space bar to select.
+      - You can use the enter key to confirm.
+      - You can use the escape key to cancel.
+
+      EXAMPLE: Question bla bla bla (default value)
+      Bracketed values are the default value if the user simply hits enter.
+      If you want to change the default value, simply type your value.
+      If you want to keep the default value, simply hit enter.
+
+      EXAMPLE: Question bla bla bla (Y/n)
+      Capitalized values are the default value if the user simply hits enter.
+      If you want to change the default value, simply type your value.
+
+      List of questions to ask the user
+
+      - ${questionsText.USER_NAME.message} (username)
+      - ${questionsText.PROJECTS_PATH.message} (/Users/username/Projects)
+      - Your path is: "projectPath" are you sure? (true)
+      - ${questionsText.SHORT_REPO_NAME.message} (upstream)
+      - ${questionsText.BRANCH_NAME.message} (master)
+      - ${questionsText.SELECTED_PROJECTS.message} [project1, project2, project3, ...]
+      - ${questionsText.SELECTED_COMMANDS.message} [pull, push, sync]
+      - ${questionsText.SYNC_FILE_NAME.message} (sync)
+`
+
 export {
   COMMANDS,
   FILE_TYPES,
   questionsText,
-  terminalView
+  coolTerminalText,
+  tips
 }

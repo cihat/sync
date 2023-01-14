@@ -2,7 +2,7 @@ import fs from "fs";
 import process from "process";
 
 import chalk from "chalk";
-import { getProjects, getProjectsObject, checkAnswersFileExist, getAnswers, saveAnswers } from "./utils.js";
+import { getProjects, getProjectsObject, checkAnswersFileExist, getAnswers, saveAnswers, clearConsoleAndTips } from "./utils.js";
 import { COMMANDS, questionsText } from './constants.js'
 
 import inquirer from "inquirer";
@@ -37,6 +37,7 @@ export default async function question() {
     USER_NAME,
     PROJECTS_PATH,
     IS_SURE_PATH,
+    SHORT_REPO_NAME,
     BRANCH_NAME,
     SELECTED_PROJECTS,
     SELECTED_COMMANDS,
@@ -50,20 +51,19 @@ export default async function question() {
 
     return answers
   }
+  clearConsoleAndTips()
 
   return await inquirer.prompt([
     {
       type: USER_NAME.type,
       name: USER_NAME.name,
       message: USER_NAME.message,
-      loop: USER_NAME.loop,
       default: USER_NAME.default,
     },
     {
       type: PROJECTS_PATH.type,
       name: PROJECTS_PATH.name,
       message: PROJECTS_PATH.message,
-      loop: PROJECTS_PATH.loop,
       default: ({ username }) => `/Users/${username}/www`,
       validate: function (value) {
         if (!value || !fs.lstatSync(value).isDirectory() || !fs.existsSync(value)) {
@@ -76,14 +76,18 @@ export default async function question() {
       type: IS_SURE_PATH.type,
       name: IS_SURE_PATH.name,
       default: IS_SURE_PATH.default,
-      loop: IS_SURE_PATH.loop,
       message: ({ path }) => `Your path is: "${path}", are you sure?`,
+    },
+    {
+      type: SHORT_REPO_NAME.type,
+      name: SHORT_REPO_NAME.name,
+      message: SHORT_REPO_NAME.message,
+      default: SHORT_REPO_NAME.default,
     },
     {
       type: BRANCH_NAME.type,
       name: BRANCH_NAME.name,
       message: BRANCH_NAME.message,
-      loop: BRANCH_NAME.loop,
       default: BRANCH_NAME.default,
     },
     {
@@ -91,6 +95,7 @@ export default async function question() {
       name: SELECTED_PROJECTS.name,
       message: SELECTED_PROJECTS.message,
       checked: SELECTED_PROJECTS.checked,
+      loop: SELECTED_PROJECTS.loop,
       choices: async ({ path }) => {
         const projects = await getProjects(path)
 
@@ -116,6 +121,8 @@ export default async function question() {
       type: SELECTED_COMMANDS.type,
       name: SELECTED_COMMANDS.name,
       message: SELECTED_COMMANDS.message,
+      checked: SELECTED_COMMANDS.checked,
+      loop: SELECTED_COMMANDS.loop,
       choices: ({ branchName }) => {
         return [
           {
@@ -151,16 +158,16 @@ export default async function question() {
       type: SYNC_FILE_NAME.type,
       name: SYNC_FILE_NAME.name,
       message: SYNC_FILE_NAME.message,
-      loop: SYNC_FILE_NAME.loop,
       default: SYNC_FILE_NAME.default,
       when: ({ commands }) => commands.some(command => command.type == COMMANDS.SYNC.TYPE)
     }
-  ]).then(({ projects, commands, branchName, syncFileName, path }) => {
+  ]).then(({ projects, commands, shortRepoName, branchName, syncFileName, path }) => {
     const _projects = getProjectsObject(projects, path)
 
     const data = {
       projects: _projects,
       commands,
+      shortRepoName,
       branchName,
       syncFileName
     }

@@ -1,6 +1,6 @@
 import fs from "fs"
 import path from "path"
-import { COMMANDS } from "./constants.js"
+import { COMMANDS, coolTerminalText, tips } from "./constants.js"
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -91,11 +91,19 @@ function saveAnswers(answers) {
   }
 }
 
+function clearConsoleAndTips() {
+  process.stdout.write('\x1Bc')
+
+  console.log(coolTerminalText)
+  console.log(tips)
+}
+
 export {
   getProjects,
   getProjectsObject,
   checkExistFile,
   checkAnswersFileExist,
   getAnswers,
-  saveAnswers
+  saveAnswers,
+  clearConsoleAndTips
 }

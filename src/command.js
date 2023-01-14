@@ -24,24 +24,21 @@ function execCommand(command, projectName) {
 }
 
 export const commandList = {
-  pull: (projectPath, projectName, branchName) => {
-    const pullCommand = `cd ${projectPath} && git pull upstream ${branchName}`
-    // const testCommand = "echo 'pull: 1'"
+  pull: (projectPath, projectName, shortRepoName, branchName) => {
+    const pullCommand = `cd ${projectPath} && git checkout ${branchName} && git pull ${shortRepoName} ${branchName}`
     execCommand(pullCommand, projectName)
   },
   push: (projectPath, projectName, branchName) => {
     const pushCommand = `cd ${projectPath} && git push origin ${branchName}`
-    // const testCommand = "echo 'push: 2'"
     execCommand(pushCommand, projectName)
   },
-  sync: (projectPath, projectName, branchName, syncFileName) => {
+  sync: (projectPath, projectName, syncFileName) => {
     const syncCommand = `cd ${projectPath} && ./${syncFileName}`
-    // const testCommand = "echo 'sync: 3'"
     execCommand(syncCommand, projectName)
   }
 }
 
-export const handleCommands = (command = COMMANDS.DEFAULT, projectPath, projectName, branchName, syncFileName) => {
+export const handleCommands = (command = COMMANDS.DEFAULT, projectPath, projectName, shortRepoName, branchName, syncFileName) => {
   if (!checkExistFile(command.type, projectPath, syncFileName)) {
     console.log(chalk.bgRed.redBright.bold(`The file [${command.type}] does not exist in the project ${projectName} \n\n\n`))
     return
@@ -49,13 +46,13 @@ export const handleCommands = (command = COMMANDS.DEFAULT, projectPath, projectN
 
   switch (command.name) {
     case COMMANDS.GIT.PULL:
-      commandList.pull(projectPath, projectName, branchName)
+      commandList.pull(projectPath, projectName, shortRepoName, branchName)
       break;
     case COMMANDS.GIT.PUSH:
       commandList.push(projectPath, projectName, branchName)
       break;
     case COMMANDS.SYNC.SYNC:
-      commandList.sync(projectPath, projectName, branchName, syncFileName)
+      commandList.sync(projectPath, projectName, syncFileName)
       break;
     default:
 
