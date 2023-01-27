@@ -2,23 +2,10 @@
   "name": "pull-push-sync",
   "version": "1.0.15",
   "description": "Customizable developer-friendly CLI tool that with pull, push and synchronizes RDS for preferred projects in the entered path.",
-  "author": "Cihat Salik <cihatsalik1@gmail.com",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/cihat/sync"
-  },
-  "homepage": "https://github.com/cihat/sync#readme",
-  "bin": "index.js",
-  "main": "index.js",
-  "type": "module",
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "start": "node index.js",
-    "start:dev": "NODE_ENV=development node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "sync",
@@ -30,7 +17,23 @@
     "pull-push-sync",
     "auto-sync"
   ],
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "NODE_ENV=development node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cihat Salik <cihatsalik1@gmail.com",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cihat/sync/issues"
+  },
+  "homepage": "https://github.com/cihat/sync#readme",
+  "bin": "index.js",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "chalk": "^5.2.0",
     "inquirer": "^9.1.4",
