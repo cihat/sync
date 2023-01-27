@@ -18,7 +18,7 @@ function execCommand(command, projectName) {
     log(chalk.hex(random.color(0.5).hex().toString()).underline.bold(`Success - ${projectName}: ${command}\t\n\t`))
     log(chalk.hex(random.color(0.5).hex().toString()).underline.bold(`Output - ${projectName}: ${stdout}\t\n\t\n\t\n\n`))
   } catch (error) {
-    log(chalk.hex(random.color(0.5).hex().toString()).underline.bold(`Error - ${projectName}: ${error}\t\n\t\n\t\n\n`))
+    log(chalk.hex(random.color(0.5).hex().toString()).underline.bold(`Error - ${projectName}: ${error?.message}\t\n\t\n\t\n\n`))
     return
   }
 }
