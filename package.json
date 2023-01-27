@@ -9,13 +9,9 @@
   },
   "keywords": [
     "sync",
-    "upstream",
-    "rds",
-    "github",
-    "command",
     "cli-tool",
-    "pull-push-sync",
-    "auto-sync"
+    "auto-sync",
+    "auto sync tool"
   ],
   "scripts": {
     "start": "node index.js",
