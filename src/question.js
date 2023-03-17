@@ -126,7 +126,7 @@ export default async function question() {
       choices: ({ branchName }) => {
         return [
           {
-            name: `pull: git pull upstream ${branchName}`,
+            name: `pull: git pull --rebase upstream ${branchName}`,
             value: {
               name: COMMANDS.GIT.PULL,
               type: COMMANDS.GIT.TYPE,

@@ -25,7 +25,7 @@ function execCommand(command, projectName) {
 
 export const commandList = {
   pull: (projectPath, projectName, shortRepoName, branchName) => {
-    const pullCommand = `cd ${projectPath} && git checkout ${branchName} && git pull ${shortRepoName} ${branchName}`
+    const pullCommand = `cd ${projectPath} && git checkout ${branchName} && git pull --rebase ${shortRepoName} ${branchName}`
     execCommand(pullCommand, projectName)
   },
   push: (projectPath, projectName, branchName) => {
