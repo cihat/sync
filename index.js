@@ -1,10 +1,8 @@
 #!/usr/bin/env node
 
 import chalk from "chalk";
+import { handleCommands, questionDevelopment, questionsProduction } from "./src/index.js"
 
-import { handleCommands } from "./src/command.js"
-import questionsProduction from "./src/question.js"
-import questionDevelopment from "./src/questionDevelopment.js"
 const questions = process.env.NODE_ENV === 'development' ? questionDevelopment : questionsProduction;
 
 (async () => {
