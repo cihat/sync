@@ -1,9 +1,10 @@
 import fs from "fs"
 import path from "path"
-import { COMMANDS, coolTerminalText, tips } from "./constants.js"
+import { COMMANDS, coolTerminalText, tips } from "../constants.js"
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { log } from "./log.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -59,7 +60,7 @@ function checkAnswersFileExist() {
   } catch (error) {
     return false
   }
-  return !fs.existsSync(answersFilePath) || !answers || answers.lenght > 0 ? false : true
+  return !fs.existsSync(answersFilePath) || !answers || answers.length > 0 ? false : true
 }
 
 function getAnswers() {
@@ -94,8 +95,8 @@ function saveAnswers(answers) {
 function clearConsoleAndTips() {
   process.stdout.write('\x1Bc')
 
-  console.log(coolTerminalText)
-  console.log(tips)
+  log(coolTerminalText)
+  log(tips)
 }
 
 export {

@@ -2,7 +2,7 @@ import fs from "fs";
 import process from "process";
 
 import chalk from "chalk";
-import { getProjects, getProjectsObject } from "./utils.js";
+import { getProjects, getProjectsObject } from "./utils/io.js";
 import { COMMANDS, questionsText } from './constants.js'
 
 import inquirer from "inquirer";
